@@ -22,8 +22,8 @@ const PRODUCT = {
   title: "Personalizovani magnet sa vašom fotografijom",
   subtitle:
     "Izaberi fotografiju i pjesmu — mi personalizujemo, pripremimo i pošaljemo na adresu. Brzo, jednostavno i bez komplikovanja.",
-  priceNow: 39.9,
-  priceOld: 49.9,
+  priceNow: 25.00,
+  priceOld: 31.00,
   currency: "BAM",
   delivery: "Dostava poštom širom BiH",
 };
