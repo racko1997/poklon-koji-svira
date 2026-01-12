@@ -167,7 +167,7 @@ export async function POST(req: Request) {
 
             <hr style="border:none;border-top:1px solid #eee;margin:16px 0" />
             <p style="margin:0;color:#666;font-size:12px">
-              Ako imaš pitanja, odgovori na ovaj email.
+              Ako imaš pitanja, odgovori na ovaj email: magicnimagnet@gmail.com
             </p>
           </div>
         `,
