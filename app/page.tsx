@@ -22,11 +22,16 @@ const PRODUCT = {
   title: "Personalizovani magnet sa vašom fotografijom",
   subtitle:
     "Izaberi fotografiju i pjesmu — mi personalizujemo, pripremimo i pošaljemo na adresu. Brzo, jednostavno i bez komplikovanja.",
-  priceNow: 25.00,
-  priceOld: 31.00,
+  priceNow: 25.0,
+  priceOld: 31.0,
   currency: "BAM",
   delivery: "Dostava poštom širom BiH",
 };
+
+// ✅ NEW: shipping + pickup note (short & clear)
+const DELIVERY_NOTE = "Poštarina nije uključena u cijenu i plaća se dodatno.";
+const PICKUP_NOTE =
+  "Lično preuzimanje moguće na području Banja Luke i Gradiške (bez poštarine).";
 
 type GalleryItem =
   | { type: "video"; src: string; poster?: string; alt: string }
@@ -289,7 +294,9 @@ export default function Page() {
             </div>
             <div className="leading-tight">
               <div className="font-semibold">{BRAND.name}</div>
-              <div className="text-xs text-neutral-500">Online narudžba • BiH</div>
+              <div className="text-xs text-neutral-500">
+                Online narudžba • BiH
+              </div>
             </div>
           </div>
 
@@ -316,24 +323,28 @@ export default function Page() {
             data-reveal
           >
             <div className="relative aspect-square overflow-hidden rounded-xl bg-neutral-100">
-              {GALLERY[Math.min(activeImg, GALLERY.length - 1)]?.type === "video" ? (
+              {GALLERY[Math.min(activeImg, GALLERY.length - 1)]?.type ===
+              "video" ? (
                 <video
                   className="h-full w-full object-cover"
                   controls
                   playsInline
                   poster={(GALLERY[activeImg] as any).poster}
                 >
-                  <source src={(GALLERY[activeImg] as any).src} type="video/mp4" />
+                  <source
+                    src={(GALLERY[activeImg] as any).src}
+                    type="video/mp4"
+                  />
                 </video>
               ) : (
                 <Image
                   src={
-                    (GALLERY[Math.min(activeImg, GALLERY.length - 1)] as any)?.src ??
-                    "/p1.jpg"
+                    (GALLERY[Math.min(activeImg, GALLERY.length - 1)] as any)
+                      ?.src ?? "/p1.jpg"
                   }
                   alt={
-                    (GALLERY[Math.min(activeImg, GALLERY.length - 1)] as any)?.alt ??
-                    "Proizvod"
+                    (GALLERY[Math.min(activeImg, GALLERY.length - 1)] as any)
+                      ?.alt ?? "Proizvod"
                   }
                   fill
                   className="object-cover"
@@ -385,7 +396,12 @@ export default function Page() {
                       </div>
                     </>
                   ) : (
-                    <Image src={item.src} alt={item.alt} fill className="object-cover" />
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      fill
+                      className="object-cover"
+                    />
                   )}
                 </button>
               ))}
@@ -420,7 +436,9 @@ export default function Page() {
                   >
                     <Check className="h-4 w-4" />
                   </div>
-                  <div className="text-sm text-neutral-700 md:text-base">{t}</div>
+                  <div className="text-sm text-neutral-700 md:text-base">
+                    {t}
+                  </div>
                 </div>
               ))}
             </div>
@@ -509,6 +527,27 @@ export default function Page() {
                 >
                   Naruči — {formatPrice(total)} {PRODUCT.currency}
                 </button>
+              </div>
+
+              {/* ✅ NEW: Shipping + Pickup info (clean & responsive) */}
+              <div className="mt-4 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3">
+                <div className="flex flex-col gap-2 text-sm text-neutral-700">
+                  <div className="flex items-start gap-2">
+                    <Truck className="mt-0.5 h-4 w-4 text-neutral-700" />
+                    <span className="text-sm text-neutral-700">
+                      <span className="font-semibold">Dostava poštom:</span>{" "}
+                      {DELIVERY_NOTE}
+                    </span>
+                  </div>
+
+                  <div className="flex items-start gap-2">
+                    <Package className="mt-0.5 h-4 w-4 text-neutral-700" />
+                    <span className="text-sm text-neutral-700">
+                      <span className="font-semibold">Lično preuzimanje:</span>{" "}
+                      {PICKUP_NOTE}
+                    </span>
+                  </div>
+                </div>
               </div>
 
               <div className="mt-4 grid gap-2 md:grid-cols-3">
@@ -657,8 +696,14 @@ export default function Page() {
               q="Kako dodajem pjesmu?"
               a="Uneseš naziv pjesme ili link (YouTube/Spotify). Mi ubacujemo pjesmu."
             />
-            <FaqItem q="Kako se plaća?" a="Pouzećem — plaćaš kuriru kad preuzmeš paket." />
-            <FaqItem q="Da li dostavljate širom BiH?" a="Da — dostava ide poštom širom BiH." />
+            <FaqItem
+              q="Kako se plaća?"
+              a="Pouzećem — plaćaš kuriru kad preuzmeš paket."
+            />
+            <FaqItem
+              q="Da li dostavljate širom BiH?"
+              a="Da — dostava ide poštom širom BiH."
+            />
           </div>
         </section>
 
@@ -779,8 +824,18 @@ export default function Page() {
                   {formatPrice(total)} {PRODUCT.currency}
                 </div>
               </div>
-              <div className="mt-2 text-xs text-neutral-500">
-                Plaćanje pouzećem • {PRODUCT.delivery}
+
+              {/* ✅ UPDATED: add shipping + pickup info in drawer */}
+              <div className="mt-2 grid gap-1 text-xs text-neutral-500">
+                <div>Plaćanje pouzećem • {PRODUCT.delivery}</div>
+                <div className="flex items-start gap-2">
+                  <Truck className="mt-0.5 h-3.5 w-3.5" />
+                  <span>{DELIVERY_NOTE}</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Package className="mt-0.5 h-3.5 w-3.5" />
+                  <span>{PICKUP_NOTE}</span>
+                </div>
               </div>
             </div>
 
@@ -821,7 +876,9 @@ export default function Page() {
 
               {/* Upload image (bulletproof) */}
               <label className="grid gap-2">
-                <span className="text-sm font-semibold">Fotografija (obavezno)</span>
+                <span className="text-sm font-semibold">
+                  Fotografija (obavezno)
+                </span>
 
                 <input
                   type="file"
@@ -923,8 +980,10 @@ export default function Page() {
                 </button>
               )}
 
+              {/* ✅ UPDATED: footer note */}
               <div className="text-xs text-neutral-500">
-                * Plaćanje pouzećem. Dostava poštom širom BiH.
+                * Plaćanje pouzećem. Dostava poštom širom BiH (poštarina se plaća
+                dodatno). Lično preuzimanje: Banja Luka i Gradiška.
               </div>
             </div>
           </div>
@@ -971,7 +1030,10 @@ function StepCard({
   brandRed: string;
 }) {
   return (
-    <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm cardHover" data-reveal>
+    <div
+      className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm cardHover"
+      data-reveal
+    >
       <div className="flex items-center justify-between">
         <div className="text-xs font-semibold text-neutral-500">KORAK</div>
         <div
@@ -997,9 +1059,15 @@ function FeatureCard({
   brandRed: string;
 }) {
   return (
-    <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm cardHover" data-reveal>
+    <div
+      className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm cardHover"
+      data-reveal
+    >
       <div className="flex items-start gap-3">
-        <div className="rounded-xl p-2 text-white" style={{ backgroundColor: brandRed }}>
+        <div
+          className="rounded-xl p-2 text-white"
+          style={{ backgroundColor: brandRed }}
+        >
           <Check className="h-5 w-5" />
         </div>
         <div>
@@ -1027,7 +1095,10 @@ function PriceCard({
   brandRedDark: string;
 }) {
   return (
-    <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm cardHover" data-reveal>
+    <div
+      className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm cardHover"
+      data-reveal
+    >
       <div className="flex items-start justify-between gap-3">
         <div>
           <div className="text-sm text-neutral-500">{label}</div>
@@ -1084,7 +1155,10 @@ function Field({
 function FaqItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="rounded-2xl border border-neutral-200 bg-white shadow-sm cardHover" data-reveal>
+    <div
+      className="rounded-2xl border border-neutral-200 bg-white shadow-sm cardHover"
+      data-reveal
+    >
       <button
         onClick={() => setOpen((v) => !v)}
         className="flex w-full items-center justify-between gap-3 px-5 py-4 text-left"
